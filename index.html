@@ -133,9 +133,6 @@
     By using this website, you agree to our use of cookies. <button class="accept-cookies-button" onclick="acceptCookies()">Accept Cookies</button>
 </div> <!-- Accept Cookies button bar -->
 <script>
-    var introAudio = document.getElementById('intro-audio');
-    introAudio.play();
-
     function fadeToBlackAndRedirect() {
         // Fade everything to black
         document.body.style.backgroundColor = 'black'; // Change background color to black
@@ -155,6 +152,10 @@
         var faqText = document.querySelector('.faq-text');
         var privacyPolicyText = document.querySelector('.privacy-policy-text');
         var acceptCookiesBar = document.getElementById('accept-cookies-bar');
+
+        // Play the intro audio
+        var introAudio = document.getElementById('intro-audio');
+        introAudio.play();
 
         loadingScreen.style.opacity = '0.1'; // Adjust the final opacity
         document.body.style.backgroundColor = 'black'; // Change background color to black
