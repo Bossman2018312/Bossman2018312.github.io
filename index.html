@@ -116,7 +116,10 @@
 </style>
 </head>
 <body>
-<audio id="intro-audio" src="INTRO.mp3" preload="auto" autoplay loop></audio> <!-- Added audio tag -->
+<audio id="click-audio">
+  <source src="CLICK.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
 
 <div class="loading-screen">
     <img src="ChimpScaryLogo1.png" alt="Logo">
@@ -124,11 +127,11 @@
 <div class="container">
     <!-- Content goes here -->
 </div>
-<div class="shop-text" onclick="fadeToBlackAndRedirect()">SHOP</div> <!-- SHOP text -->
-<div class="faq-text" onclick="fadeToBlackAndRedirect()">FAQ</div> <!-- FAQ text -->
-<div class="privacy-policy-text" onclick="fadeToBlackAndRedirect()">Privacy Policy</div> <!-- Privacy Policy text -->
+<div class="shop-text" onclick="playClickSound(); fadeToBlackAndRedirect()">SHOP</div> <!-- SHOP text -->
+<div class="faq-text" onclick="playClickSound(); fadeToBlackAndRedirect()">FAQ</div> <!-- FAQ text -->
+<div class="privacy-policy-text" onclick="playClickSound(); fadeToBlackAndRedirect()">Privacy Policy</div> <!-- Privacy Policy text -->
 <div class="accept-cookies-bar" id="accept-cookies-bar">
-    By using this website, you agree to our use of cookies. <button class="accept-cookies-button" onclick="acceptCookies()">Accept Cookies</button>
+    By using this website, you agree to our use of cookies. <button class="accept-cookies-button" onclick="playClickSound(); acceptCookies()">Accept Cookies</button>
 </div> <!-- Accept Cookies button bar -->
 <script>
     function fadeToBlackAndRedirect() {
@@ -175,6 +178,12 @@
         // Here you can implement the logic to set cookies and close the bar
         var acceptCookiesBar = document.getElementById('accept-cookies-bar');
         acceptCookiesBar.style.opacity = '0'; // Fade out the Accept Cookies bar
+    }
+
+    // Function to play click sound
+    function playClickSound() {
+        var clickAudio = document.getElementById('click-audio');
+        clickAudio.play();
     }
 </script>
 </body>
