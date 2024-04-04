@@ -122,7 +122,7 @@
 <div class="container">
     <!-- Content goes here -->
 </div>
-<div class="shop-text" onclick="redirect('shop.chimpscary.com')">SHOP</div> <!-- SHOP text -->
+<div class="shop-text" onclick="fadeToBlackAndRedirect()">SHOP</div> <!-- SHOP text -->
 <div class="faq-text" onclick="fadeToBlackAndRedirect()">FAQ</div> <!-- FAQ text -->
 <div class="privacy-policy-text" onclick="fadeToBlackAndRedirect()">Privacy Policy</div> <!-- Privacy Policy text -->
 <div class="accept-cookies-bar" id="accept-cookies-bar">
@@ -137,13 +137,8 @@
 
         // Redirect to the shop page after a delay
         setTimeout(function() {
-            redirect('shop.chimpscary.com');
+            window.location.href = 'https://shop.chimpscary.com';
         }, 100); // Adjust delay as needed
-    }
-
-    // Function to redirect to a URL
-    function redirect(url) {
-        window.location.href = url;
     }
 
     // Function to hide the loading screen and show SHOP, FAQ, and Privacy Policy text
