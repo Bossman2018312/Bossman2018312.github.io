@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fake Loading Screen</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: black; /* Set initial background color to black */
+        transition: background-color 1s ease; /* Add transition for background color */
+        font-family: 'small_bold_pixel-7', sans-serif; /* Apply custom font */
+    }
+
+    @font-face {
+        font-family: 'small_bold_pixel-7';
+        src: url('file:///C:/Users/liamt/Downloads/small_bold_pixel-7.ttf') format('truetype'); /* Path to your font file */
+    }
+
+    .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: transparent; /* Adjust background color if needed */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1; /* Initial opacity */
+        transition: opacity 0.5s ease; /* Fade-out transition */
+    }
+    .loading-screen img {
+        animation: spin 2s linear infinite, fadeIn 1s ease; /* Adjust animation properties */
+        width: 384px; /* Adjust the width to 3 times the original size (128px * 3) */
+        height: 384px; /* Adjust the height to 3 times the original size (128px * 3) */
+        image-rendering: pixelated; /* Prevent smoothing */
+        opacity: 1; /* Initial opacity */
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+    /* Style for the SHOP, FAQ, and Privacy Policy buttons */
+    .shop-text, .faq-text, .privacy-policy-text, .accept-cookies-button {
+        position: fixed;
+        color: blue;
+        font-size: 64px; /* 2x bigger by default */
+        text-shadow: 0 0 20px blue; /* Add bloom effect */
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.5s ease, font-size 0.5s ease; /* Fade-in transition and font-size transition */
+        cursor: pointer; /* Change cursor to pointer on hover */
+    }
+
+    /* Smooth transition for hover effect */
+    .shop-text:hover, .faq-text:hover, .privacy-policy-text:hover, .accept-cookies-button:hover {
+        font-size: 72px; /* Increase font size when hovered */
+        text-shadow: 0 0 40px blue; /* Increase bloom effect when hovered */
+    }
+
+    /* Positioning for SHOP, FAQ, and Privacy Policy buttons */
+    .shop-text {
+        top: 20px;
+        right: 20px;
+    }
+
+    .faq-text {
+        top: 100px; /* Adjust as needed */
+        right: 20px;
+    }
+
+    .privacy-policy-text {
+        top: 180px; /* Adjust as needed */
+        right: 20px;
+    }
+
+    .accept-cookies-button {
+        bottom: 20px;
+        right: 20px;
+        background-color: transparent;
+        border: 2px solid white;
+        color: white;
+        padding: 10px 20px;
+        font-size: 24px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+        font-family: 'small_bold_pixel-7', sans-serif;
+    }
+
+    .accept-cookies-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Style for the Accept Cookies button bar */
+    .accept-cookies-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+        padding: 10px;
+        color: white;
+        font-size: 24px; /* Increased font size */
+        text-align: center;
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.5s ease; /* Fade-in transition */
+    }
+</style>
+</head>
+<body>
+<div class="loading-screen">
+    <img src="ChimpScaryLogo1.png" alt="Logo">
+</div>
+<div class="container">
+    <!-- Content goes here -->
+</div>
+<div class="shop-text" onclick="fadeToBlackAndRedirect()">SHOP</div> <!-- SHOP text -->
+<div class="faq-text" onclick="fadeToBlackAndRedirect()">FAQ</div> <!-- FAQ text -->
+<div class="privacy-policy-text" onclick="fadeToBlackAndRedirect()">Privacy Policy</div> <!-- Privacy Policy text -->
+<div class="accept-cookies-bar" id="accept-cookies-bar">
+    By using this website, you agree to our use of cookies. <button class="accept-cookies-button" onclick="acceptCookies()">Accept Cookies</button>
+</div> <!-- Accept Cookies button bar -->
+<script>
+    function fadeToBlackAndRedirect() {
+        // Fade everything to black
+        document.body.style.backgroundColor = 'black'; // Change background color to black
+        var shopText = document.querySelector('.shop-text');
+        shopText.style.opacity = '0.1'; // Adjust the final opacity
+
+        // Redirect to the shop page after a delay
+        setTimeout(function() {
+            window.location.href = 'shop.html'; // Replace 'new_shop.html' with the URL of your new shop page
+        }, 100); // Adjust delay as needed
+    }
+
+    // Function to hide the loading screen and show SHOP, FAQ, and Privacy Policy text
+    function hideLoadingScreen() {
+        var loadingScreen = document.querySelector('.loading-screen');
+        var shopText = document.querySelector('.shop-text');
+        var faqText = document.querySelector('.faq-text');
+        var privacyPolicyText = document.querySelector('.privacy-policy-text');
+        var acceptCookiesBar = document.getElementById('accept-cookies-bar');
+
+        loadingScreen.style.opacity = '0.1'; // Adjust the final opacity
+        document.body.style.backgroundColor = 'black'; // Change background color to black
+        
+        // Fade-in SHOP, FAQ, and Privacy Policy text
+        setTimeout(function() {
+            shopText.style.opacity = '1';
+            faqText.style.opacity = '1';
+            privacyPolicyText.style.opacity = '1';
+            acceptCookiesBar.style.opacity = '1'; // Show Accept Cookies bar
+        }, 1000); // Adjust delay as needed
+
+        setTimeout(function() {
+            loadingScreen.style.display = 'none';
+        }, 500); // Fade out duration
+    }
+
+    // Call the hideLoadingScreen function after 5 seconds
+    setTimeout(hideLoadingScreen, 5000); // Adjust time as needed
+
+    // Function to accept cookies
+    function acceptCookies() {
+        // Here you can implement the logic to set cookies and close the bar
+        var acceptCookiesBar = document.getElementById('accept-cookies-bar');
+        acceptCookiesBar.style.opacity = '0'; // Fade out the Accept Cookies bar
+    }
+</script>
+</body>
+</html>
