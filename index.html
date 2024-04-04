@@ -116,7 +116,7 @@
 </style>
 </head>
 <body>
-<audio autoplay once>
+<audio id="intro-audio">
     <source src="INTRO.mp3" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
@@ -133,6 +133,11 @@
     By using this website, you agree to our use of cookies. <button class="accept-cookies-button" onclick="acceptCookies()">Accept Cookies</button>
 </div> <!-- Accept Cookies button bar -->
 <script>
+    window.onload = function() {
+        var introAudio = document.getElementById('intro-audio');
+        introAudio.play();
+    };
+
     function fadeToBlackAndRedirect() {
         // Fade everything to black
         document.body.style.backgroundColor = 'black'; // Change background color to black
