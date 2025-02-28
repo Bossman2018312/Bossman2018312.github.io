@@ -52,20 +52,18 @@
         100% { opacity: 1; }
     }
 
-    /* New Monk Game text at the top */
     .monk-game-text {
         position: absolute;
         top: 20px;
         left: 50%;
         transform: translateX(-50%);
         color: yellow;
-        font-size: 48px; /* Initial size */
+        font-size: 144px; /* Max scale */
         text-shadow: 0 0 20px yellow; /* Bloom effect */
         font-family: 'small_bold_pixel-7', sans-serif;
         opacity: 1;
     }
 
-    /* Adjusting the Shop, FAQ, and Privacy Policy buttons */
     .shop-text, .faq-text, .privacy-policy-text, .accept-cookies-button {
         position: fixed;
         color: yellow;
@@ -76,7 +74,6 @@
         cursor: pointer;
     }
 
-    /* Hover effect for buttons */
     .shop-text:hover, .faq-text:hover, .privacy-policy-text:hover, .accept-cookies-button:hover {
         font-size: 72px;
         text-shadow: 0 0 40px yellow; /* Increase bloom effect */
@@ -118,17 +115,27 @@
         transition: opacity 0.5s ease;
     }
 
-    /* Slider to change scale */
-    .scale-slider-container {
-        position: absolute;
-        bottom: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: yellow;
+    .placeholder-image {
+        width: 200px;
+        height: 200px;
+        background-color: grey;
+        margin: 20px;
     }
 
-    .scale-slider {
-        width: 300px;
+    .bottom-image {
+        position: fixed;
+        bottom: -200px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 200px;
+        background-color: grey;
+        transition: transform 1s ease, opacity 1s ease;
+    }
+
+    .bottom-image.visible {
+        transform: translateX(-50%) translateY(-100px) rotate(360deg) scale(1.5);
+        opacity: 1;
     }
 </style>
 </head>
@@ -142,18 +149,14 @@
     <img src="ChimpScaryLogo1.png" alt="Logo">
 </div>
 
-<!-- Monk Game Text -->
 <div class="monk-game-text">Monk Game</div>
 
-<!-- Scale Slider -->
-<div class="scale-slider-container">
-    <label for="scale-slider">Scale Text: </label>
-    <input type="range" id="scale-slider" class="scale-slider" min="0.5" max="3" step="0.1" value="1" onchange="adjustScale(this.value)">
+<div class="container">
+    <div class="placeholder-image"></div>
+    <div class="placeholder-image"></div>
 </div>
 
-<div class="container">
-    <!-- Content goes here -->
-</div>
+<div class="bottom-image"></div>
 
 <div class="shop-text" onclick="playClickSound(); fadeToBlackAndRedirect()">SHOP</div>
 <div class="faq-text" onclick="playClickSound(); fadeToBlackAndRedirect()">FAQ</div>
@@ -207,11 +210,14 @@
         clickAudio.play();
     }
 
-    // Function to adjust text scale
-    function adjustScale(scale) {
-        var monkGameText = document.querySelector('.monk-game-text');
-        monkGameText.style.fontSize = (48 * scale) + 'px';
-    }
+    window.addEventListener('scroll', function() {
+        var bottomImage = document.querySelector('.bottom-image');
+        if (window.scrollY > 100) {
+            bottomImage.classList.add('visible');
+        } else {
+            bottomImage.classList.remove('visible');
+        }
+    });
 </script>
 
 </body>
