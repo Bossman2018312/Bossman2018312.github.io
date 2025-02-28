@@ -9,9 +9,9 @@
         margin: 0;
         padding: 0;
         height: 100%;
-        background-color: black; /* Set initial background color to black */
-        transition: background-color 1s ease; /* Add transition for background color */
-        font-family: 'small_bold_pixel-7', sans-serif; /* Apply custom font */
+        background-color: black;
+        transition: background-color 1s ease;
+        font-family: 'small_bold_pixel-7', sans-serif;
     }
 
     @font-face {
@@ -25,68 +25,73 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: transparent; /* Adjust background color if needed */
+        background-color: transparent;
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 9999;
-        opacity: 1; /* Initial opacity */
-        transition: opacity 0.5s ease; /* Fade-out transition */
+        opacity: 1;
+        transition: opacity 0.5s ease;
     }
+
     .loading-screen img {
-        animation: spin 2s linear infinite, fadeIn 1s ease; /* Adjust animation properties */
-        width: 384px; /* Adjust the width to 3 times the original size (128px * 3) */
-        height: 384px; /* Adjust the height to 3 times the original size (128px * 3) */
-        image-rendering: pixelated; /* Prevent smoothing */
-        opacity: 1; /* Initial opacity */
+        animation: spin 2s linear infinite, fadeIn 1s ease;
+        width: 384px;
+        height: 384px;
+        image-rendering: pixelated;
+        opacity: 1;
     }
+
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
     @keyframes fadeIn {
         0% { opacity: 0; }
         100% { opacity: 1; }
     }
-    /* Style for the SHOP, FAQ, and Privacy Policy buttons */
+
+    /* New Monk Game text at the top */
+    .monk-game-text {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: yellow;
+        font-size: 48px; /* Initial size */
+        text-shadow: 0 0 20px yellow; /* Bloom effect */
+        font-family: 'small_bold_pixel-7', sans-serif;
+        opacity: 1;
+    }
+
+    /* Adjusting the Shop, FAQ, and Privacy Policy buttons */
     .shop-text, .faq-text, .privacy-policy-text, .accept-cookies-button {
         position: fixed;
-        color: blue;
+        color: yellow;
         font-size: 64px; /* 2x bigger by default */
-        text-shadow: 0 0 20px blue; /* Add bloom effect */
-        opacity: 0; /* Initially hidden */
-        transition: opacity 0.5s ease, font-size 0.5s ease; /* Fade-in transition and font-size transition */
-        cursor: pointer; /* Change cursor to pointer on hover */
+        text-shadow: 0 0 20px yellow; /* Add yellow bloom effect */
+        opacity: 0;
+        transition: opacity 0.5s ease, font-size 0.5s ease;
+        cursor: pointer;
     }
 
-    /* Smooth transition for hover effect */
+    /* Hover effect for buttons */
     .shop-text:hover, .faq-text:hover, .privacy-policy-text:hover, .accept-cookies-button:hover {
-        font-size: 72px; /* Increase font size when hovered */
-        text-shadow: 0 0 40px blue; /* Increase bloom effect when hovered */
+        font-size: 72px;
+        text-shadow: 0 0 40px yellow; /* Increase bloom effect */
     }
 
-    /* Positioning for SHOP, FAQ, and Privacy Policy buttons */
-    .shop-text {
-        top: 20px;
-        right: 20px;
-    }
-
-    .faq-text {
-        top: 100px; /* Adjust as needed */
-        right: 20px;
-    }
-
-    .privacy-policy-text {
-        top: 180px; /* Adjust as needed */
-        right: 20px;
-    }
+    .shop-text { top: 100px; right: 20px; }
+    .faq-text { top: 180px; right: 20px; }
+    .privacy-policy-text { top: 260px; right: 20px; }
 
     .accept-cookies-button {
         bottom: 20px;
         right: 20px;
         background-color: transparent;
-        border: 2px solid white;
-        color: white;
+        border: 2px solid yellow;
+        color: yellow;
         padding: 10px 20px;
         font-size: 24px;
         cursor: pointer;
@@ -99,19 +104,31 @@
         background-color: rgba(255, 255, 255, 0.1);
     }
 
-    /* Style for the Accept Cookies button bar */
     .accept-cookies-bar {
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
-        background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+        background-color: rgba(0, 0, 0, 0.7);
         padding: 10px;
-        color: white;
-        font-size: 24px; /* Increased font size */
+        color: yellow;
+        font-size: 24px;
         text-align: center;
-        opacity: 0; /* Initially hidden */
-        transition: opacity 0.5s ease; /* Fade-in transition */
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    /* Slider to change scale */
+    .scale-slider-container {
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: yellow;
+    }
+
+    .scale-slider {
+        width: 300px;
     }
 </style>
 </head>
@@ -124,29 +141,38 @@
 <div class="loading-screen">
     <img src="ChimpScaryLogo1.png" alt="Logo">
 </div>
+
+<!-- Monk Game Text -->
+<div class="monk-game-text">Monk Game</div>
+
+<!-- Scale Slider -->
+<div class="scale-slider-container">
+    <label for="scale-slider">Scale Text: </label>
+    <input type="range" id="scale-slider" class="scale-slider" min="0.5" max="3" step="0.1" value="1" onchange="adjustScale(this.value)">
+</div>
+
 <div class="container">
     <!-- Content goes here -->
 </div>
-<div class="shop-text" onclick="playClickSound(); fadeToBlackAndRedirect()">SHOP</div> <!-- SHOP text -->
-<div class="faq-text" onclick="playClickSound(); fadeToBlackAndRedirect()">FAQ</div> <!-- FAQ text -->
-<div class="privacy-policy-text" onclick="playClickSound(); fadeToBlackAndRedirect()">Privacy Policy</div> <!-- Privacy Policy text -->
+
+<div class="shop-text" onclick="playClickSound(); fadeToBlackAndRedirect()">SHOP</div>
+<div class="faq-text" onclick="playClickSound(); fadeToBlackAndRedirect()">FAQ</div>
+<div class="privacy-policy-text" onclick="playClickSound(); fadeToBlackAndRedirect()">Privacy Policy</div>
 <div class="accept-cookies-bar" id="accept-cookies-bar">
     By using this website, you agree to our use of cookies. <button class="accept-cookies-button" onclick="playClickSound(); acceptCookies()">Accept Cookies</button>
-</div> <!-- Accept Cookies button bar -->
+</div>
+
 <script>
     function fadeToBlackAndRedirect() {
-        // Fade everything to black
-        document.body.style.backgroundColor = 'black'; // Change background color to black
+        document.body.style.backgroundColor = 'black';
         var shopText = document.querySelector('.shop-text');
-        shopText.style.opacity = '0.1'; // Adjust the final opacity
+        shopText.style.opacity = '0.1';
 
-        // Redirect to the shop page after a delay
         setTimeout(function() {
             window.location.href = 'https://shop.chimpscary.com';
-        }, 100); // Adjust delay as needed
+        }, 100);
     }
 
-    // Function to hide the loading screen and show SHOP, FAQ, and Privacy Policy text
     function hideLoadingScreen() {
         var loadingScreen = document.querySelector('.loading-screen');
         var shopText = document.querySelector('.shop-text');
@@ -154,37 +180,39 @@
         var privacyPolicyText = document.querySelector('.privacy-policy-text');
         var acceptCookiesBar = document.getElementById('accept-cookies-bar');
 
-        loadingScreen.style.opacity = '0.1'; // Adjust the final opacity
-        document.body.style.backgroundColor = 'black'; // Change background color to black
-        
-        // Fade-in SHOP, FAQ, and Privacy Policy text
+        loadingScreen.style.opacity = '0.1';
+        document.body.style.backgroundColor = 'black';
+
         setTimeout(function() {
             shopText.style.opacity = '1';
             faqText.style.opacity = '1';
             privacyPolicyText.style.opacity = '1';
-            acceptCookiesBar.style.opacity = '1'; // Show Accept Cookies bar
-        }, 1000); // Adjust delay as needed
+            acceptCookiesBar.style.opacity = '1';
+        }, 1000);
 
         setTimeout(function() {
             loadingScreen.style.display = 'none';
-        }, 500); // Fade out duration
+        }, 500);
     }
 
-    // Call the hideLoadingScreen function after 5 seconds
-    setTimeout(hideLoadingScreen, 5000); // Adjust time as needed
+    setTimeout(hideLoadingScreen, 5000);
 
-    // Function to accept cookies
     function acceptCookies() {
-        // Here you can implement the logic to set cookies and close the bar
         var acceptCookiesBar = document.getElementById('accept-cookies-bar');
-        acceptCookiesBar.style.opacity = '0'; // Fade out the Accept Cookies bar
+        acceptCookiesBar.style.opacity = '0';
     }
 
-    // Function to play click sound
     function playClickSound() {
         var clickAudio = document.getElementById('click-audio');
         clickAudio.play();
     }
+
+    // Function to adjust text scale
+    function adjustScale(scale) {
+        var monkGameText = document.querySelector('.monk-game-text');
+        monkGameText.style.fontSize = (48 * scale) + 'px';
+    }
 </script>
+
 </body>
 </html>
